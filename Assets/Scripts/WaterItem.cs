@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Diagnostics;
 
 public class WaterItem : MonoBehaviour
 {
@@ -58,6 +59,6 @@ public class WaterItem : MonoBehaviour
 
     public void UpdatePriceText()
     {
-        priceText.text = $"{basePrice}‰~";
+        priceText.text = NumberFormatter.Format(basePrice);
     }
 }

@@ -43,6 +43,6 @@ public class MoneySystem : MonoBehaviour
     // UIを更新（ここでリンクする）
     public void UpdateMoneyText()
     {
-        moneyText.text = $"{money}円";
+        moneyText.text = NumberFormatter.Format(money);
     }
 }

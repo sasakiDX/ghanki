@@ -20,12 +20,13 @@ public class ShopUI : MonoBehaviour
 
     public void UpdateShopText()
     {
-        waterUpgradeText.text =
-            $"{waterItem.upgradeCost}‰~";
+        // …‚Ì‹­‰»”ï—p‚ğ•\¦
+        waterUpgradeText.text = NumberFormatter.Format(waterItem.upgradeCost);
     }
 
     public void OnClickUpgradeWater()
     {
         waterItem.Upgrade();
+        UpdateShopText();
     }
 }

@@ -19,6 +19,11 @@ public class WaterItem : MonoBehaviour
     public float clickMultiplier = 0.5f;
     public float autoInterval = 1f;
 
+    /*
+
+
+     */
+
     private float timer;
 
     void Start()
@@ -56,7 +61,6 @@ public class WaterItem : MonoBehaviour
         UpdatePriceText();
         ShopUI.Instance.UpdateShopText();
     }
-
     public void UpdatePriceText()
     {
         priceText.text = NumberFormatter.Format(basePrice);

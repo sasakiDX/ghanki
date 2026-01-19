@@ -6,13 +6,14 @@ public class ShopUI : MonoBehaviour
 {
     public static ShopUI Instance;
 
-    [Header("水")]
-    public WaterItem waterItem;
-    public TMP_Text waterUpgradeText;
+    [Header("ドリンク")]
+    public DrinkItem waterItem;
+    public DrinkItem teaItem;
 
-    [Header("お茶")]
-    public TeaItem teaItem;
+    [Header("表示")]
+    public TMP_Text waterUpgradeText;
     public TMP_Text teaBuyText;
+
     public Image teaShopImage;
 
     void Awake()
@@ -23,12 +24,11 @@ public class ShopUI : MonoBehaviour
     void Start()
     {
         UpdateShopText();
-        UpdateTeaShopView();
     }
 
     public void UpdateShopText()
     {
-        waterUpgradeText.text = NumberFormatter.Format(waterItem.upgradeCost);
+        waterUpgradeText.text = NumberFormatter.Format(waterItem.price);
 
         if (!teaItem.isUnlocked)
         {
@@ -42,17 +42,14 @@ public class ShopUI : MonoBehaviour
         UpdateTeaShopView();
     }
 
-    // 水の強化ボタン
     public void OnClickUpgradeWater()
     {
-        waterItem.Upgrade();
-        UpdateShopText();
+        // 強化は後で
     }
 
-    // お茶の購入ボタン
     public void OnClickBuyTea()
     {
-        bool success = teaItem.BuyTea();
+        bool success = teaItem.Buy();
 
         if (success)
         {
@@ -60,6 +57,7 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    //お茶の表示
     void UpdateTeaShopView()
     {
         if (teaShopImage == null) return;

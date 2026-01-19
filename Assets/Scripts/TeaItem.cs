@@ -1,85 +1,57 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class TeaItem : MonoBehaviour
 {
-    [Header("お茶の基本データ")]
-    public int level = 1;
-    public int basePrice = 100;
+    [Header("購入設定")]
+    public bool isUnlocked = false;
+    public int unlockCost = 2000;
 
-    [Header("解放設定")]
-    public bool isUnlocked = false;   // 購入済みかどうか
-
-    [Header("UI")]
-    public TMP_Text priceText;
-
-    [Header("売上設定")]
-    public float clickMultiplier = 0.5f;
-    public float autoInterval = 1f;
-
-    [Header("表示制御")]
-    public CanvasGroup canvasGroup;   // プレイ画面のお茶を透明にする用
-
-    private float timer;
+    [Header("表示用")]
+    public Image teaImage;   // プレイ画面のお茶のImage
 
     void Start()
     {
-        UpdatePriceText();
-        UpdateVisibility();   // ← 追加：開始時に表示状態を反映
-    }
-
-    void Update()
-    {
-        if (!isUnlocked) return;   // 未購入なら何もしない
-
-        timer += Time.deltaTime;
-        if (timer >= autoInterval)
-        {
-            timer = 0f;
-            MoneySystem.Instance.AddMoney(basePrice);
-        }
-    }
-
-    // クリック売上
-    public void OnClickSell()
-    {
-        if (!isUnlocked) return;   // 未購入なら反応しない
-
-        int clickValue = Mathf.FloorToInt(basePrice * clickMultiplier);
-        MoneySystem.Instance.AddMoney(clickValue);
-    }
-
-    // 表示更新（透明 or 表示）
-    void UpdateVisibility()
-    {
-        if (canvasGroup == null) return;
-
-        if (isUnlocked)
-        {
-            canvasGroup.alpha = 1f;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-        }
-        else
-        {
-            canvasGroup.alpha = 0f;          // 完全に透明
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-        }
-    }
-
-    // 後でショップ購入時に呼ぶ予定
-    public void Unlock()
-    {
-        isUnlocked = true;
         UpdateVisibility();
     }
 
-    public void UpdatePriceText()
+    // 購入処理（ショップから呼ばれる）
+    public bool BuyTea()
     {
-        if (priceText != null)
+        // すでに購入済みなら何もしない
+        if (isUnlocked) return false;
+
+        // お金が足りなければ失敗
+        if (!MoneySystem.Instance.SpendMoney(unlockCost))
         {
-            priceText.text = NumberFormatter.Format(basePrice);
+            return false;
+        }
+
+        // 購入成功
+        isUnlocked = true;
+        UpdateVisibility();
+
+        return true;
+    }
+
+    // 表示状態の更新
+    public void UpdateVisibility()
+    {
+        if (teaImage == null) return;
+
+        if (isUnlocked)
+        {
+            // 表示する（完全表示）
+            Color c = teaImage.color;
+            c.a = 1f;
+            teaImage.color = c;
+        }
+        else
+        {
+            // 非表示（透明）
+            Color c = teaImage.color;
+            c.a = 0f;
+            teaImage.color = c;
         }
     }
 }

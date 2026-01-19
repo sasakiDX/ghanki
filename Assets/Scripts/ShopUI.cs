@@ -1,18 +1,17 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
     public static ShopUI Instance;
 
-    [Header("Water")]
+    [Header("水")]
     public WaterItem waterItem;
     public TMP_Text waterUpgradeText;
 
-    [Header("Tea (Shop Only)")]
-    public GameObject teaShopRoot;   // ショップ内の「お茶」
-    public bool teaUnlocked = false;
+    [Header("お茶")]
+    public TeaItem teaItem;
+    public TMP_Text teaBuyText;   // 「2000円」など表示するテキスト
 
     void Awake()
     {
@@ -22,27 +21,39 @@ public class ShopUI : MonoBehaviour
     void Start()
     {
         UpdateShopText();
-        UpdateTeaVisual();
     }
 
     public void UpdateShopText()
     {
+        // 水の強化費用表示
         waterUpgradeText.text = NumberFormatter.Format(waterItem.upgradeCost);
+
+        // お茶の購入費用表示（未購入のときだけ）
+        if (!teaItem.isUnlocked)
+        {
+            teaBuyText.text = NumberFormatter.Format(teaItem.unlockCost);
+        }
+        else
+        {
+            teaBuyText.text = "購入済み";
+        }
     }
 
-    void UpdateTeaVisual()
-    {
-        Image image = teaShopRoot.GetComponent<Image>();
-        if (image == null) return;
-
-        image.color = teaUnlocked
-    ? Color.white
-    : new Color(0.1f, 0.1f, 0.1f, 1f);
-    }
-
+    // 水の強化ボタン
     public void OnClickUpgradeWater()
     {
         waterItem.Upgrade();
         UpdateShopText();
+    }
+
+    // ★ お茶の購入ボタン（今回追加）
+    public void OnClickBuyTea()
+    {
+        bool success = teaItem.BuyTea();
+
+        if (success)
+        {
+            UpdateShopText();
+        }
     }
 }

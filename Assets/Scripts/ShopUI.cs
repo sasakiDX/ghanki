@@ -6,17 +6,19 @@ public class ShopUI : MonoBehaviour
 {
     public static ShopUI Instance;
 
-    [Header("Water")]
-    public WaterItem waterItem;
-    public TMP_Text waterUpgradeText;
+    [System.Serializable]
+    public class ShopDrinkEntry
+    {
+        public string label;
+        public DrinkItem drinkItem;  // メイン画面側のドリンク
+        public GameObject shopRoot;  // ショップ内のドリンクルート
+        public TMP_Text costText;    // 購入/強化コスト表示
+        public long unlockCost = 1000;
+        public bool isUnlocked = false;
+    }
 
-    [Header("Tea (Shop Only)")]
-    public GameObject teaShopRoot;   // ショップ内の「お茶」
-    public TeaItem teaItem;          // メイン画面側の「お茶」
-    public TMP_Text teaUnlockText;   // 解放/強化コスト表示
-    public TMP_Text teaUpgradeText;  // 解放/強化コスト表示（任意）
-    public int teaUnlockCost = 1000;
-    public bool teaUnlocked = false;
+    [Header("Drinks")]
+    public ShopDrinkEntry[] drinks;
 
     void Awake()
     {
@@ -25,68 +27,89 @@ public class ShopUI : MonoBehaviour
 
     void Start()
     {
+        SyncFromDrinkItems();
         UpdateShopText();
-        UpdateTeaVisual();
+        UpdateAllDrinkVisuals();
+    }
+
+    void SyncFromDrinkItems()
+    {
+        if (drinks == null) return;
+
+        for (int i = 0; i < drinks.Length; i++)
+        {
+            if (drinks[i].drinkItem != null)
+            {
+                drinks[i].isUnlocked = drinks[i].drinkItem.isUnlocked;
+            }
+        }
     }
 
     public void UpdateShopText()
     {
-        if (waterUpgradeText != null)
-        {
-            waterUpgradeText.text = NumberFormatter.Format(waterItem.upgradeCost);
-        }
+        if (drinks == null) return;
 
-        long teaCost = teaUnlocked && teaItem != null
-            ? teaItem.upgradeCost
-            : teaUnlockCost;
-
-        if (teaUnlockText != null)
+        for (int i = 0; i < drinks.Length; i++)
         {
-            teaUnlockText.text = NumberFormatter.Format(teaCost);
-        }
+            var entry = drinks[i];
+            if (entry.costText == null) continue;
 
-        if (teaUpgradeText != null)
-        {
-            teaUpgradeText.text = NumberFormatter.Format(teaCost);
+            long cost = entry.isUnlocked && entry.drinkItem != null
+                ? entry.drinkItem.upgradeCost
+                : entry.unlockCost;
+
+            entry.costText.text = NumberFormatter.Format(cost);
         }
     }
 
-    void UpdateTeaVisual()
+    void UpdateAllDrinkVisuals()
     {
-        Image image = teaShopRoot.GetComponent<Image>();
+        if (drinks == null) return;
+
+        for (int i = 0; i < drinks.Length; i++)
+        {
+            UpdateDrinkVisual(i);
+        }
+    }
+
+    void UpdateDrinkVisual(int index)
+    {
+        if (drinks == null || index < 0 || index >= drinks.Length) return;
+
+        var entry = drinks[index];
+        if (entry.shopRoot == null) return;
+
+        Image image = entry.shopRoot.GetComponent<Image>();
         if (image == null) return;
 
-        image.color = teaUnlocked
+        image.color = entry.isUnlocked
             ? Color.white
             : new Color(0.1f, 0.1f, 0.1f, 1f);
     }
 
-    public void OnClickUpgradeWater()
+    public void OnClickDrinkAction(int index)
     {
-        waterItem.Upgrade();
-        UpdateShopText();
-    }
+        if (drinks == null || index < 0 || index >= drinks.Length) return;
 
-    // 購入と強化が同じボタンの場合はこれを使う
-    public void OnClickTeaAction()
-    {
-        if (!teaUnlocked)
+        var entry = drinks[index];
+
+        if (!entry.isUnlocked)
         {
-            if (!MoneySystem.Instance.SpendMoney(teaUnlockCost))
+            if (!MoneySystem.Instance.SpendMoney(entry.unlockCost))
                 return;
 
-            teaUnlocked = true;
-            UpdateTeaVisual();
-
-            if (teaItem != null)
+            entry.isUnlocked = true;
+            if (entry.drinkItem != null)
             {
-                teaItem.SetUnlocked(true);
+                entry.drinkItem.SetUnlocked(true);
             }
+
+            UpdateDrinkVisual(index);
         }
         else
         {
-            if (teaItem == null) return;
-            teaItem.Upgrade();
+            if (entry.drinkItem == null) return;
+            entry.drinkItem.Upgrade();
         }
 
         UpdateShopText();

@@ -1,18 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class TeaItem : MonoBehaviour
 {
-    [Header("�����̊�{�f�[�^")]
+    [Header("お茶の基本データ")]
     public int basePrice = 100;
 
-    [Header("�w�����")]
+    [Header("購入状態")]
     public bool isUnlocked = false;
 
     [Header("UI")]
     public TMP_Text priceText;
     public Image itemImage;
+    public CanvasGroup mainCanvasGroup;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class TeaItem : MonoBehaviour
     {
         UpdatePriceText();
         UpdateVisual();
+        UpdateMainVisibility();
     }
 
     void UpdatePriceText()
@@ -34,7 +36,24 @@ public class TeaItem : MonoBehaviour
     {
         if (itemImage == null) return;
 
-        // ���w���Ȃ�O���[�A�E�g
+        // 未購入ならグレーアウト
         itemImage.color = isUnlocked ? Color.white : Color.gray;
+    }
+
+    void UpdateMainVisibility()
+    {
+        if (mainCanvasGroup == null) return;
+
+        // 未解放ならメイン画面を透明化
+        mainCanvasGroup.alpha = isUnlocked ? 1f : 0f;
+        mainCanvasGroup.interactable = isUnlocked;
+        mainCanvasGroup.blocksRaycasts = isUnlocked;
+    }
+
+    // ショップから解放されたときに呼ぶ
+    public void SetUnlocked(bool unlocked)
+    {
+        isUnlocked = unlocked;
+        UpdateView();
     }
 }

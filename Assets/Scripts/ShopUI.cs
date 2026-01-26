@@ -104,12 +104,22 @@ public class ShopUI : MonoBehaviour
                 entry.drinkItem.SetUnlocked(true);
             }
 
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayPurchaseSfx();
+            }
+
             UpdateDrinkVisual(index);
         }
         else
         {
             if (entry.drinkItem == null) return;
             entry.drinkItem.Upgrade();
+
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayPurchaseSfx();
+            }
         }
 
         UpdateShopText();

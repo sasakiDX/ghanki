@@ -48,11 +48,12 @@ public class FeverRoulette : MonoBehaviour
 
     IEnumerator SpinOnce()
     {
-        if (isFever) yield break;
+        if (isFever || isSpinning) yield break;
 
         isSpinning = true;
 
         int baseDigit = Random.Range(minDigit, maxDigit + 1);
+        int lastDigitFinal = Random.Range(minDigit, maxDigit + 1);
         int[] digits = new int[4];
 
         // Roll first three digits one by one
@@ -83,22 +84,29 @@ public class FeverRoulette : MonoBehaviour
             yield return new WaitForSeconds(wait);
         }
 
-        digits[3] = Random.Range(minDigit, maxDigit + 1);
+        digits[3] = lastDigitFinal;
         UpdateText(digits);
 
-        bool win = IsAllDigitsMatch(digits);
+        // Ensure UI text has applied before judging
+        yield return null;
+
+        bool win = IsDisplayedAllMatch();
+        isSpinning = false;
+
         if (win && !isFever)
         {
             yield return StartCoroutine(StartFever());
         }
-
-        isSpinning = false;
     }
 
-    bool IsAllDigitsMatch(int[] digits)
+    bool IsDisplayedAllMatch()
     {
-        if (digits == null || digits.Length < 4) return false;
-        return digits[0] == digits[1] && digits[1] == digits[2] && digits[2] == digits[3];
+        if (rouletteText == null) return false;
+        string t = rouletteText.text;
+        if (string.IsNullOrEmpty(t) || t.Length < 4) return false;
+        char c0 = t[0];
+        if (c0 < '1' || c0 > '9') return false;
+        return t[1] == c0 && t[2] == c0 && t[3] == c0;
     }
 
     IEnumerator StartFever()
@@ -123,7 +131,6 @@ public class FeverRoulette : MonoBehaviour
             blink = StartCoroutine(BlinkText());
         }
 
-        // Wait until fever BGM finishes (fallback to length if needed)
         if (AudioManager.Instance != null && AudioManager.Instance.IsFeverBgmPlaying())
         {
             while (AudioManager.Instance != null && AudioManager.Instance.IsFeverBgmPlaying())

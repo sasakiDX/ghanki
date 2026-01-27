@@ -83,6 +83,11 @@ public class DrinkItem : MonoBehaviour
 
         long clickValue = (long)Math.Floor(basePrice * clickMultiplier);
         MoneySystem.Instance.AddMoney(clickValue);
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayClickSfx();
+        }
     }
 
     // 強化処理

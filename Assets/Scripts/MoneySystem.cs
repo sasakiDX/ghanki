@@ -1,3 +1,4 @@
+ï»¿using System;
 using UnityEngine;
 using TMPro;
 
@@ -6,11 +7,14 @@ public class MoneySystem : MonoBehaviour
     public static MoneySystem Instance;
 
     [Header("UI")]
-    public TMP_Text moneyText;  // MoneyText ‚ğƒAƒTƒCƒ“‚·‚é
+    public TMP_Text moneyText;  // MoneyText ã‚’ã‚¢ã‚µã‚¤ãƒ³ã™ã‚‹
 
     [Header("Money Data")]
-    public long money = 0;     // Š‹à
-    public long sales = 0;     // ”„ãiUI‚É•\¦‚µ‚È‚¢j
+    public long money = 0;     // æ‰€æŒé‡‘
+    public long sales = 0;     // å£²ä¸Šï¼ˆUIã«è¡¨ç¤ºã—ãªã„ï¼‰
+
+    [Header("Fever")]
+    public float moneyMultiplier = 1f;
 
     private void Awake()
     {
@@ -22,14 +26,15 @@ public class MoneySystem : MonoBehaviour
         UpdateMoneyText();
     }
 
-    // Š‹à‚ğ‘‚â‚·
+    // æ‰€æŒé‡‘ã‚’å¢—ã‚„ã™
     public void AddMoney(long amount)
     {
-        money += amount;
+        long add = (long)Math.Floor(amount * moneyMultiplier);
+        money += add;
         UpdateMoneyText();
     }
 
-    // Š‹à‚ğŒ¸‚ç‚·
+    // æ‰€æŒé‡‘ã‚’æ¸›ã‚‰ã™
     public bool SpendMoney(long amount)
     {
         if (money < amount) return false;
@@ -40,7 +45,12 @@ public class MoneySystem : MonoBehaviour
         return true;
     }
 
-    // UI‚ğXVi‚±‚±‚ÅƒŠƒ“ƒN‚·‚éj
+    public void SetMultiplier(float multiplier)
+    {
+        moneyMultiplier = Mathf.Max(0f, multiplier);
+    }
+
+    // UIã‚’æ›´æ–°ï¼ˆã“ã“ã§ãƒªãƒ³ã‚¯ã™ã‚‹ï¼‰
     public void UpdateMoneyText()
     {
         moneyText.text = NumberFormatter.Format(money);

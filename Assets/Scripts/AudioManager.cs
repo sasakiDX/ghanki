@@ -7,12 +7,15 @@ public class AudioManager : MonoBehaviour
     [Header("BGM")]
     public AudioSource bgmSource;
     public AudioClip bgmClip;
+    public AudioClip feverBgmClip;
     public bool playOnStart = true;
     public float volume = 0.5f;
 
     [Header("SFX")]
     public AudioSource sfxSource;
     public AudioClip purchaseClip;
+    public AudioClip clickClip;
+    public AudioClip winClip;
     public float sfxVolume = 0.7f;
 
     void Awake()
@@ -66,7 +69,50 @@ public class AudioManager : MonoBehaviour
 
     public void PlayPurchaseSfx()
     {
-        if (purchaseClip == null || sfxSource == null) return;
-        sfxSource.PlayOneShot(purchaseClip);
+        PlaySfx(purchaseClip);
+    }
+
+    public void PlayClickSfx()
+    {
+        PlaySfx(clickClip);
+    }
+
+    public void PlayWinSfx()
+    {
+        PlaySfx(winClip);
+    }
+
+    public float GetFeverBgmLength()
+    {
+        return feverBgmClip != null ? feverBgmClip.length : 0f;
+    }
+
+    public bool IsFeverBgmPlaying()
+    {
+        return bgmSource != null && bgmSource.isPlaying && bgmSource.clip == feverBgmClip;
+    }
+
+    public void PlayFeverBgm()
+    {
+        if (bgmSource == null || feverBgmClip == null) return;
+        bgmSource.Stop();
+        bgmSource.clip = feverBgmClip;
+        bgmSource.loop = false;
+        bgmSource.Play();
+    }
+
+    public void RestoreBgm()
+    {
+        if (bgmSource == null || bgmClip == null) return;
+        bgmSource.Stop();
+        bgmSource.clip = bgmClip;
+        bgmSource.loop = true;
+        bgmSource.Play();
+    }
+
+    void PlaySfx(AudioClip clip)
+    {
+        if (clip == null || sfxSource == null) return;
+        sfxSource.PlayOneShot(clip);
     }
 }

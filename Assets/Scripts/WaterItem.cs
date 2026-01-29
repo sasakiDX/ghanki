@@ -1,21 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using System.Diagnostics;
 
 public class WaterItem : MonoBehaviour
 {
-    [Header("…‚ÌŠî–{ƒf[ƒ^")]
+    [Header("ï¿½ï¿½ï¿½ÌŠï¿½{ï¿½fï¿½[ï¿½^")]
     public int level = 1;
     public int basePrice = 30;
 
-    [Header("‹­‰»İ’è")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½")]
     public int upgradeCost = 100;
     public float priceIncreaseRate = 1.5f;
 
     [Header("UI")]
     public TMP_Text priceText;
 
-    [Header("”„ãİ’è")]
+    [Header("ï¿½ï¿½ï¿½ï¿½İ’ï¿½")]
     public float clickMultiplier = 0.5f;
     public float autoInterval = 1f;
 
@@ -41,14 +41,14 @@ public class WaterItem : MonoBehaviour
         }
     }
 
-    // ƒNƒŠƒbƒN”„ã
+    // ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½
     public void OnClickSell()
     {
         int clickValue = Mathf.FloorToInt(basePrice * clickMultiplier);
         MoneySystem.Instance.AddMoney(clickValue);
     }
 
-    // ‹­‰»ˆ—
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void Upgrade()
     {
         if (!MoneySystem.Instance.SpendMoney(upgradeCost))
@@ -63,6 +63,6 @@ public class WaterItem : MonoBehaviour
     }
     public void UpdatePriceText()
     {
-        priceText.text = NumberFormatter.Format(basePrice);
+        priceText.text = NumberFormatter.FormatLimited(basePrice);
     }
 }

@@ -58,7 +58,7 @@ public class ShopUI : MonoBehaviour
                 ? entry.drinkItem.upgradeCost
                 : entry.unlockCost;
 
-            entry.costText.text = NumberFormatter.Format(cost);
+            entry.costText.text = NumberFormatter.FormatLimited(cost);
         }
     }
 

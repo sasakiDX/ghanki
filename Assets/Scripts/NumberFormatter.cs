@@ -1,25 +1,98 @@
+Ôªøusing System;
+
 public static class NumberFormatter
 {
-    public static string Format(long value)
+    private static readonly string[] Units = new string[]
     {
-        if (value < 1000)
+        "", "‰∏á", "ÂÑÑ", "ÂÖÜ", "‰∫¨", "Âûì", "Áß≠", "Á©£", "Ê∫ù", "Êæó", "Ê≠£", "Ëºâ", "Ê•µ", "ÊÅíÊ≤≥Ê≤ô", "ÈòøÂÉßÁ•á", "ÈÇ£Áî±‰ªñ", "‰∏çÂèØÊÄùË≠∞", "ÁÑ°ÈáèÂ§ßÊï∞"
+    };
+
+    public static string FormatFull(long value)
+    {
+        if (value < 0)
         {
-            return value.ToString() + "â~";
+            return "-" + FormatFull(-value);
         }
-        else if (value < 10_000)
+
+        if (value < 10_000)
         {
-            // 1êÁ Å` 9.9êÁ
-            return (value / 1000f).ToString("0.#") + "êÁâ~";
+            return value.ToString("N0") + "ÂÜÜ";
         }
-        else if (value < 100_000_000)
+
+        decimal v = value;
+        int unitIndex = 0;
+
+        while (v >= 10_000m && unitIndex < Units.Length - 1)
         {
-            // 1ñú Å` 9999ñú
-            return (value / 10_000f).ToString("0.#") + "ñúâ~";
+            v /= 10_000m;
+            unitIndex++;
+        }
+
+        string fmt;
+        if (v >= 100m)
+        {
+            fmt = "0";
+        }
+        else if (v >= 10m)
+        {
+            fmt = "0.#";
         }
         else
         {
-            // 1â≠à»è„
-            return (value / 100_000_000f).ToString("0.#") + "â≠â~";
+            fmt = "0.##";
         }
+
+        return v.ToString(fmt) + Units[unitIndex] + "ÂÜÜ";
+    }
+
+    public static string FormatLimited(long value, int maxChars = 5)
+    {
+        string s = FormatFull(value);
+        if (s.Length <= maxChars)
+        {
+            return s;
+        }
+
+        // Try a shorter format by trimming decimals
+        string compact = FormatFullRounded(value, 0);
+        if (compact.Length <= maxChars)
+        {
+            return compact;
+        }
+
+        // Fallback: remove currency suffix if still too long
+        string noYen = compact.EndsWith("ÂÜÜ") ? compact.Substring(0, compact.Length - 1) : compact;
+        if (noYen.Length <= maxChars)
+        {
+            return noYen;
+        }
+
+        // Last resort: hard trim
+        return noYen.Substring(0, Math.Min(maxChars, noYen.Length));
+    }
+
+    static string FormatFullRounded(long value, int decimals)
+    {
+        if (value < 0)
+        {
+            return "-" + FormatFullRounded(-value, decimals);
+        }
+
+        if (value < 10_000)
+        {
+            return value.ToString("N0") + "ÂÜÜ";
+        }
+
+        decimal v = value;
+        int unitIndex = 0;
+
+        while (v >= 10_000m && unitIndex < Units.Length - 1)
+        {
+            v /= 10_000m;
+            unitIndex++;
+        }
+
+        string fmt = decimals <= 0 ? "0" : "0." + new string('#', decimals);
+        return v.ToString(fmt) + Units[unitIndex] + "ÂÜÜ";
     }
 }

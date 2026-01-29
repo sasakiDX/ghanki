@@ -55,7 +55,7 @@ public class DrinkItem : MonoBehaviour
     void UpdatePriceText()
     {
         if (priceText == null) return;
-        priceText.text = NumberFormatter.Format(basePrice);
+        priceText.text = NumberFormatter.FormatLimited(basePrice);
     }
 
     void UpdateVisual()

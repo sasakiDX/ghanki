@@ -21,6 +21,8 @@ public class FeverRoulette : MonoBehaviour
     [Header("Fever")]
     public float feverMultiplier = 2f;
     public float blinkInterval = 0.15f;
+    [Range(0.01f, 1f)]
+    public float feverChance = 0.05f; // 1/20
 
     private bool isSpinning;
     private bool isFever;
@@ -53,7 +55,7 @@ public class FeverRoulette : MonoBehaviour
         isSpinning = true;
 
         int baseDigit = Random.Range(minDigit, maxDigit + 1);
-        int lastDigitFinal = Random.Range(minDigit, maxDigit + 1);
+        int lastDigitFinal = DecideLastDigit(baseDigit);
         int[] digits = new int[4];
 
         // Roll first three digits one by one
@@ -87,10 +89,7 @@ public class FeverRoulette : MonoBehaviour
         digits[3] = lastDigitFinal;
         UpdateText(digits);
 
-        // Ensure UI text has applied before judging
-        yield return null;
-
-        bool win = IsDisplayedAllMatch();
+        bool win = (lastDigitFinal == baseDigit);
         isSpinning = false;
 
         if (win && !isFever)
@@ -99,14 +98,20 @@ public class FeverRoulette : MonoBehaviour
         }
     }
 
-    bool IsDisplayedAllMatch()
+    int DecideLastDigit(int baseDigit)
     {
-        if (rouletteText == null) return false;
-        string t = rouletteText.text;
-        if (string.IsNullOrEmpty(t) || t.Length < 4) return false;
-        char c0 = t[0];
-        if (c0 < '1' || c0 > '9') return false;
-        return t[1] == c0 && t[2] == c0 && t[3] == c0;
+        // 1/20 chance to match; otherwise pick a different digit
+        if (Random.value < feverChance)
+        {
+            return baseDigit;
+        }
+
+        int d;
+        do
+        {
+            d = Random.Range(minDigit, maxDigit + 1);
+        } while (d == baseDigit);
+        return d;
     }
 
     IEnumerator StartFever()

@@ -833,7 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u6C34"
   level: 1
-  basePrice: 30
+  basePrice: 300000000000
   upgradeCost: 100
   priceIncreaseRate: 1.5
   isUnlocked: 1

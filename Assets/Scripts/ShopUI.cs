@@ -114,9 +114,9 @@ public class ShopUI : MonoBehaviour
         else
         {
             if (entry.drinkItem == null) return;
-            entry.drinkItem.Upgrade();
+            bool upgraded = entry.drinkItem.Upgrade();
 
-            if (AudioManager.Instance != null)
+            if (upgraded && AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlayPurchaseSfx();
             }

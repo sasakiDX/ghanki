@@ -13,6 +13,7 @@ public class DrinkItem : MonoBehaviour
     [Header("強化設定")]
     public long upgradeCost = 100;
     public float priceIncreaseRate = 1.5f;
+    public float upgradeCostIncreaseRate = 1.8f;
 
     [Header("解放状態")]
     public bool isUnlocked = true;
@@ -23,7 +24,7 @@ public class DrinkItem : MonoBehaviour
     public CanvasGroup mainCanvasGroup;
 
     [Header("売上設定")]
-    public float clickMultiplier = 0.5f;
+    public float clickMultiplier = 0.1f;
     public float autoInterval = 1f;
 
     private float timer;
@@ -91,21 +92,23 @@ public class DrinkItem : MonoBehaviour
     }
 
     // 強化処理
-    public void Upgrade()
+    public bool Upgrade()
     {
-        if (!isUnlocked) return;
+        if (!isUnlocked) return false;
         if (!MoneySystem.Instance.SpendMoney(upgradeCost))
-            return;
+            return false;
 
         level++;
         basePrice = (long)Math.Floor(basePrice * priceIncreaseRate);
-        upgradeCost = (long)Math.Floor(upgradeCost * 1.8f);
+        upgradeCost = (long)Math.Floor(upgradeCost * upgradeCostIncreaseRate);
 
         UpdatePriceText();
         if (ShopUI.Instance != null)
         {
             ShopUI.Instance.UpdateShopText();
         }
+
+        return true;
     }
 
     // ショップから解放されたときに呼ぶ

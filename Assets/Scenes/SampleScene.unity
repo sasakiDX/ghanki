@@ -836,6 +836,7 @@ MonoBehaviour:
   basePrice: 30
   upgradeCost: 100
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 1.55
   isUnlocked: 1
   priceText: {fileID: 1573188465}
   itemImage: {fileID: 91129887}
@@ -1505,6 +1506,7 @@ MonoBehaviour:
   basePrice: 100
   upgradeCost: 300
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 1.6
   isUnlocked: 0
   priceText: {fileID: 1632967691}
   itemImage: {fileID: 275732305}
@@ -1549,6 +1551,7 @@ MonoBehaviour:
   basePrice: 4000
   upgradeCost: 8000
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 1.8
   isUnlocked: 0
   priceText: {fileID: 1002953295}
   itemImage: {fileID: 278928711}
@@ -1773,6 +1776,7 @@ MonoBehaviour:
   basePrice: 420000
   upgradeCost: 850000
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 2.2
   isUnlocked: 0
   priceText: {fileID: 54318325}
   itemImage: {fileID: 280840777}
@@ -4634,6 +4638,7 @@ MonoBehaviour:
   basePrice: 40000
   upgradeCost: 80000
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 2
   isUnlocked: 0
   priceText: {fileID: 1804393623}
   itemImage: {fileID: 1023533255}
@@ -4802,7 +4807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 350, y: -241}
+  m_AnchoredPosition: {x: 349, y: -238}
   m_SizeDelta: {x: 421.926, y: 106.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1042589149
@@ -4828,6 +4833,7 @@ MonoBehaviour:
   feverMultiplier: 2
   blinkInterval: 0.15
   feverChance: 0.05
+  feverCooldownSeconds: 300
 --- !u!114 &1042589150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4942,6 +4948,7 @@ MonoBehaviour:
   feverMultiplier: 2
   blinkInterval: 0.15
   feverChance: 0.05
+  feverCooldownSeconds: 300
 --- !u!222 &1042589152
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5834,6 +5841,7 @@ MonoBehaviour:
   basePrice: 12000
   upgradeCost: 25000
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 1.9
   isUnlocked: 0
   priceText: {fileID: 963230007}
   itemImage: {fileID: 1379741084}
@@ -6140,6 +6148,7 @@ MonoBehaviour:
   basePrice: 1400000
   upgradeCost: 2800000
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 2.35
   isUnlocked: 0
   priceText: {fileID: 1231832057}
   itemImage: {fileID: 1477665928}
@@ -7067,6 +7076,7 @@ MonoBehaviour:
   basePrice: 350
   upgradeCost: 900
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 1.65
   isUnlocked: 0
   priceText: {fileID: 1502907689}
   itemImage: {fileID: 1658547349}
@@ -7777,6 +7787,7 @@ MonoBehaviour:
   basePrice: 130000
   upgradeCost: 260000
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 2.1
   isUnlocked: 0
   priceText: {fileID: 1043742414}
   itemImage: {fileID: 1812451604}
@@ -7947,6 +7958,7 @@ MonoBehaviour:
   basePrice: 1200
   upgradeCost: 2500
   priceIncreaseRate: 1.5
+  upgradeCostIncreaseRate: 1.7
   isUnlocked: 0
   priceText: {fileID: 1653878527}
   itemImage: {fileID: 1837732861}

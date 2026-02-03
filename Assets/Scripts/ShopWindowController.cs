@@ -1,18 +1,30 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class ShopWindowController : MonoBehaviour
 {
     public GameObject shopWindow;
 
-    // ƒVƒ‡ƒbƒv‚ğŠJ‚­
+    [Header("Optional")]
+    public CanvasGroup mainCanvasGroup; // ãƒ¡ã‚¤ãƒ³ç”»é¢ã®æ“ä½œã‚’ä¸€æ‹¬ã§æ­¢ã‚ã‚‹
+
+    // ã‚·ãƒ§ãƒƒãƒ—ã‚’é–‹ã
     public void OpenShop()
     {
         shopWindow.SetActive(true);
+        SetMainInteractable(false);
     }
 
-    // ƒVƒ‡ƒbƒv‚ğ•Â‚¶‚é
+    // ã‚·ãƒ§ãƒƒãƒ—ã‚’é–‰ã˜ã‚‹
     public void CloseShop()
     {
         shopWindow.SetActive(false);
+        SetMainInteractable(true);
+    }
+
+    void SetMainInteractable(bool enable)
+    {
+        if (mainCanvasGroup == null) return;
+        mainCanvasGroup.interactable = enable;
+        mainCanvasGroup.blocksRaycasts = enable;
     }
 }

@@ -833,14 +833,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u6C34"
   level: 1
-  basePrice: 300000000000
+  basePrice: 30
   upgradeCost: 100
   priceIncreaseRate: 1.5
   isUnlocked: 1
   priceText: {fileID: 1573188465}
   itemImage: {fileID: 91129887}
   mainCanvasGroup: {fileID: 0}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!1 &125966638
 GameObject:
@@ -1502,14 +1502,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u304A\u8336"
   level: 1
-  basePrice: 200
-  upgradeCost: 1000
+  basePrice: 100
+  upgradeCost: 300
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1632967691}
   itemImage: {fileID: 275732305}
   mainCanvasGroup: {fileID: 275732308}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!1 &278928708
 GameObject:
@@ -1546,14 +1546,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u30A8\u30CA\u30B8\u30FC"
   level: 1
-  basePrice: 180000
-  upgradeCost: 500000
+  basePrice: 4000
+  upgradeCost: 8000
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1002953295}
   itemImage: {fileID: 278928711}
   mainCanvasGroup: {fileID: 278928710}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &278928710
 CanvasGroup:
@@ -1770,14 +1770,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u30AB\u30D6\u30C8\u30AC\u30CB"
   level: 1
-  basePrice: 1000000000000
-  upgradeCost: 5000000000000
+  basePrice: 420000
+  upgradeCost: 850000
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 54318325}
   itemImage: {fileID: 280840777}
   mainCanvasGroup: {fileID: 280840776}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &280840776
 CanvasGroup:
@@ -3449,6 +3449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopWindow: {fileID: 70554468}
+  mainCanvasGroup: {fileID: 1019406314}
 --- !u!114 &683695043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3478,49 +3479,49 @@ MonoBehaviour:
     drinkItem: {fileID: 1658547347}
     shopRoot: {fileID: 1151818765}
     costText: {fileID: 1575974564}
-    unlockCost: 5000
+    unlockCost: 8000
     isUnlocked: 1
   - label: "\u30B3\u30FC\u30D2\u30FC"
     drinkItem: {fileID: 1837732859}
     shopRoot: {fileID: 1066999066}
     costText: {fileID: 617533826}
-    unlockCost: 50000
+    unlockCost: 60000
     isUnlocked: 1
   - label: "\u30A8\u30CA\u30B8\u30FC"
     drinkItem: {fileID: 278928709}
     shopRoot: {fileID: 217162069}
     costText: {fileID: 181588968}
-    unlockCost: 18000
+    unlockCost: 450000
     isUnlocked: 1
   - label: "\u304A\u3067\u3093"
     drinkItem: {fileID: 1379741082}
     shopRoot: {fileID: 901082527}
     costText: {fileID: 1732253174}
-    unlockCost: 500000
+    unlockCost: 3500000
     isUnlocked: 1
   - label: "\u30A2\u30DF\u30CE"
     drinkItem: {fileID: 1023533253}
     shopRoot: {fileID: 230081510}
     costText: {fileID: 1096694579}
-    unlockCost: 5002303
+    unlockCost: 28000000
     isUnlocked: 1
   - label: "\u8056\u6C34"
     drinkItem: {fileID: 1812451602}
     shopRoot: {fileID: 1603802742}
     costText: {fileID: 1415376387}
-    unlockCost: 100000000
+    unlockCost: 230000000
     isUnlocked: 1
   - label: "\u30AB\u30D6\u30C8\u30AC\u30CB"
     drinkItem: {fileID: 280840775}
     shopRoot: {fileID: 456062192}
     costText: {fileID: 1811680391}
-    unlockCost: 100000000000
+    unlockCost: 1900000000
     isUnlocked: 1
   - label: "\u30A8\u30EA\u30AF\u30B5\u30FC"
     drinkItem: {fileID: 1477665926}
     shopRoot: {fileID: 617391495}
     costText: {fileID: 422355435}
-    unlockCost: 10000000000000000
+    unlockCost: 15000000000
     isUnlocked: 1
 --- !u!1 &716542604
 GameObject:
@@ -4508,6 +4509,7 @@ GameObject:
   - component: {fileID: 1019406311}
   - component: {fileID: 1019406313}
   - component: {fileID: 1019406312}
+  - component: {fileID: 1019406314}
   m_Layer: 5
   m_Name: "\u81EA\u8CA9\u6A5F"
   m_TagString: Untagged
@@ -4582,6 +4584,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019406310}
   m_CullTransparentMesh: 1
+--- !u!225 &1019406314
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019406310}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1023533252
 GameObject:
   m_ObjectHideFlags: 0
@@ -4617,14 +4631,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u30A2\u30DF\u30CE"
   level: 1
-  basePrice: 5000000
-  upgradeCost: 10000000
+  basePrice: 40000
+  upgradeCost: 80000
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1804393623}
   itemImage: {fileID: 1023533255}
   mainCanvasGroup: {fileID: 1023533254}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &1023533254
 CanvasGroup:
@@ -5817,14 +5831,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u304A\u3067\u3093"
   level: 1
-  basePrice: 500000
-  upgradeCost: 1000000
+  basePrice: 12000
+  upgradeCost: 25000
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 963230007}
   itemImage: {fileID: 1379741084}
   mainCanvasGroup: {fileID: 1379741083}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &1379741083
 CanvasGroup:
@@ -6123,14 +6137,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u30A8\u30EA\u30AF\u30B5\u30FC"
   level: 1
-  basePrice: 10000000000000000
-  upgradeCost: 100000000000000000
+  basePrice: 1400000
+  upgradeCost: 2800000
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1231832057}
   itemImage: {fileID: 1477665928}
   mainCanvasGroup: {fileID: 1477665927}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &1477665927
 CanvasGroup:
@@ -7050,14 +7064,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u30B3\u30FC\u30E9"
   level: 1
-  basePrice: 500
-  upgradeCost: 10000
+  basePrice: 350
+  upgradeCost: 900
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1502907689}
   itemImage: {fileID: 1658547349}
   mainCanvasGroup: {fileID: 1658547348}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &1658547348
 CanvasGroup:
@@ -7760,14 +7774,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u8056\u6C34"
   level: 1
-  basePrice: 100000000
-  upgradeCost: 5000000000
+  basePrice: 130000
+  upgradeCost: 260000
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1043742414}
   itemImage: {fileID: 1812451604}
   mainCanvasGroup: {fileID: 1812451603}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &1812451603
 CanvasGroup:
@@ -7930,14 +7944,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: "\u30B3\u30FC\u30D2\u30FC"
   level: 1
-  basePrice: 10000
-  upgradeCost: 100000
+  basePrice: 1200
+  upgradeCost: 2500
   priceIncreaseRate: 1.5
   isUnlocked: 0
   priceText: {fileID: 1653878527}
   itemImage: {fileID: 1837732861}
   mainCanvasGroup: {fileID: 1837732860}
-  clickMultiplier: 0.5
+  clickMultiplier: 0.1
   autoInterval: 1
 --- !u!225 &1837732860
 CanvasGroup:

@@ -22,10 +22,12 @@ public class FeverRoulette : MonoBehaviour
     public float feverMultiplier = 2f;
     public float blinkInterval = 0.15f;
     [Range(0.01f, 1f)]
-    public float feverChance = 0.05f; // 1/20
+    public float feverChance = 0.04f; // 1/25
+    public float feverCooldownSeconds = 300f; // 5 minutes
 
     private bool isSpinning;
     private bool isFever;
+    private float nextFeverAllowedTime;
 
     void Start()
     {
@@ -92,7 +94,7 @@ public class FeverRoulette : MonoBehaviour
         bool win = (lastDigitFinal == baseDigit);
         isSpinning = false;
 
-        if (win && !isFever)
+        if (win && !isFever && Time.time >= nextFeverAllowedTime)
         {
             yield return StartCoroutine(StartFever());
         }
@@ -100,12 +102,23 @@ public class FeverRoulette : MonoBehaviour
 
     int DecideLastDigit(int baseDigit)
     {
-        // 1/20 chance to match; otherwise pick a different digit
+        // Cooldown: force miss
+        if (Time.time < nextFeverAllowedTime)
+        {
+            return PickDifferentDigit(baseDigit);
+        }
+
+        // 1/25 chance to match; otherwise pick a different digit
         if (Random.value < feverChance)
         {
             return baseDigit;
         }
 
+        return PickDifferentDigit(baseDigit);
+    }
+
+    int PickDifferentDigit(int baseDigit)
+    {
         int d;
         do
         {
@@ -118,6 +131,7 @@ public class FeverRoulette : MonoBehaviour
     {
         if (isFever) yield break;
         isFever = true;
+        nextFeverAllowedTime = Time.time + feverCooldownSeconds;
 
         if (MoneySystem.Instance != null)
         {

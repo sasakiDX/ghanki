@@ -47,6 +47,17 @@ public static class NumberFormatter
 
     public static string FormatLimited(long value, int maxChars = 5)
     {
+        if (value < 0)
+        {
+            return "-" + FormatLimited(-value, maxChars);
+        }
+
+        // Under 10,000: keep 円 and avoid commas to fit 5 chars (e.g. 1000円)
+        if (value < 10_000)
+        {
+            return value.ToString() + "円";
+        }
+
         string s = FormatFull(value);
         if (s.Length <= maxChars)
         {

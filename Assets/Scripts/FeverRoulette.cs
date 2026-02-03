@@ -22,7 +22,7 @@ public class FeverRoulette : MonoBehaviour
     public float feverMultiplier = 2f;
     public float blinkInterval = 0.15f;
     [Range(0.01f, 1f)]
-    public float feverChance = 0.04f; // 1/25
+    public float feverChance = 0.02f; // 1/50
     public float feverCooldownSeconds = 300f; // 5 minutes
 
     private bool isSpinning;

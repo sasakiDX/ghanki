@@ -92,7 +92,7 @@ public class DrinkItem : MonoBehaviour
     }
 
     // 強化処理
-    public bool Upgrade()
+    public bool Upgrade() 
     {
         if (!isUnlocked) return false;
         if (!MoneySystem.Instance.SpendMoney(upgradeCost))

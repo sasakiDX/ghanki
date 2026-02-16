@@ -108,6 +108,11 @@ public class DrinkItem : MonoBehaviour
             ShopUI.Instance.UpdateShopText();
         }
 
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.MarkDirty();
+        }
+
         return true;
     }
 
@@ -116,5 +121,10 @@ public class DrinkItem : MonoBehaviour
     {
         isUnlocked = unlocked;
         UpdateView();
+
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.MarkDirty();
+        }
     }
 }

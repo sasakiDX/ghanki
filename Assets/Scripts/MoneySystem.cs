@@ -32,6 +32,10 @@ public class MoneySystem : MonoBehaviour
         long add = (long)Math.Floor(amount * moneyMultiplier);
         money += add;
         UpdateMoneyText();
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.MarkDirty();
+        }
     }
 
     // 所持金を減らす
@@ -42,6 +46,10 @@ public class MoneySystem : MonoBehaviour
         money -= amount;
         sales += amount;
         UpdateMoneyText();
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.MarkDirty();
+        }
         return true;
     }
 

@@ -62,6 +62,12 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    public void RefreshAll()
+    {
+        UpdateShopText();
+        UpdateAllDrinkVisuals();
+    }
+
     void UpdateAllDrinkVisuals()
     {
         if (drinks == null) return;

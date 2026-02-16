@@ -27,7 +27,7 @@ public class DrinkItem : MonoBehaviour
     public float clickMultiplier = 0.1f;
     public float autoInterval = 1f;
 
-    private float timer;
+    float timer;
 
     void Start()
     {
@@ -42,6 +42,7 @@ public class DrinkItem : MonoBehaviour
         if (timer >= autoInterval)
         {
             timer = 0f;
+            //自動売上
             MoneySystem.Instance.AddMoney(basePrice);
         }
     }
@@ -62,22 +63,20 @@ public class DrinkItem : MonoBehaviour
     void UpdateVisual()
     {
         if (itemImage == null) return;
-
-        // 未解放ならグレーアウト
+        //未解放の時にグレーアウト
         itemImage.color = isUnlocked ? Color.white : Color.gray;
     }
 
     void UpdateMainVisibility()
     {
         if (mainCanvasGroup == null) return;
-
-        // 未解放ならメイン画面を透明化
+        //未解放の時メイン画面を透明化とクリック無効
         mainCanvasGroup.alpha = isUnlocked ? 1f : 0f;
         mainCanvasGroup.interactable = isUnlocked;
         mainCanvasGroup.blocksRaycasts = isUnlocked;
     }
 
-    // クリック売上
+    //クリック売上
     public void OnClickSell()
     {
         if (!isUnlocked) return;
@@ -91,8 +90,8 @@ public class DrinkItem : MonoBehaviour
         }
     }
 
-    // 強化処理
-    public bool Upgrade() 
+    //強化処理
+    public bool Upgrade()
     {
         if (!isUnlocked) return false;
         if (!MoneySystem.Instance.SpendMoney(upgradeCost))
@@ -116,7 +115,7 @@ public class DrinkItem : MonoBehaviour
         return true;
     }
 
-    // ショップから解放されたときに呼ぶ
+    //ショップから解放されたときに呼ぶ
     public void SetUnlocked(bool unlocked)
     {
         isUnlocked = unlocked;

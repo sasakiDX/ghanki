@@ -9,7 +9,7 @@ public class SaveManager : MonoBehaviour
     [Header("Auto Save")]
     public float autosaveInterval = 5f;
 
-    private bool dirty;
+    bool dirty;
 
     const string KeyVersion = "save_version";
     const int Version = 1;
@@ -35,6 +35,7 @@ public class SaveManager : MonoBehaviour
 
     IEnumerator LoadAfterInit()
     {
+        //他の初期化完了後にロード
         yield return null;
         Load();
     }

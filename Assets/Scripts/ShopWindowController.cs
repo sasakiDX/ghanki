@@ -5,16 +5,16 @@ public class ShopWindowController : MonoBehaviour
     public GameObject shopWindow;
 
     [Header("Optional")]
-    public CanvasGroup mainCanvasGroup; // メイン画面の操作を一括で止める
+    public CanvasGroup mainCanvasGroup; //メイン画面の操作を一括で止める
 
-    // ショップを開く
+    //ショップを開く
     public void OpenShop()
     {
         shopWindow.SetActive(true);
         SetMainInteractable(false);
     }
 
-    // ショップを閉じる
+    //ショップを閉じる
     public void CloseShop()
     {
         shopWindow.SetActive(false);

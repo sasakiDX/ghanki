@@ -10,9 +10,9 @@ public class ShopUI : MonoBehaviour
     public class ShopDrinkEntry
     {
         public string label;
-        public DrinkItem drinkItem;  // メイン画面側のドリンク
-        public GameObject shopRoot;  // ショップ内のドリンクルート
-        public TMP_Text costText;    // 購入/強化コスト表示
+        public DrinkItem drinkItem;  //メイン画面側のドリンク
+        public GameObject shopRoot;  //ショップ内のドリンクルート
+        public TMP_Text costText;    //購入/強化コスト表示
         public long unlockCost = 1000;
         public bool isUnlocked = false;
     }
@@ -28,8 +28,7 @@ public class ShopUI : MonoBehaviour
     void Start()
     {
         SyncFromDrinkItems();
-        UpdateShopText();
-        UpdateAllDrinkVisuals();
+        RefreshAll();
     }
 
     void SyncFromDrinkItems()
@@ -88,11 +87,13 @@ public class ShopUI : MonoBehaviour
         Image image = entry.shopRoot.GetComponent<Image>();
         if (image == null) return;
 
+        //未解放なら暗く表示
         image.color = entry.isUnlocked
             ? Color.white
             : new Color(0.1f, 0.1f, 0.1f, 1f);
     }
 
+    //共通の購入/強化ボタン処理
     public void OnClickDrinkAction(int index)
     {
         if (drinks == null || index < 0 || index >= drinks.Length) return;

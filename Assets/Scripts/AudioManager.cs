@@ -30,16 +30,17 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        //BGM用
         if (bgmSource == null)
         {
             bgmSource = GetComponent<AudioSource>();
         }
-
         if (bgmSource == null)
         {
             bgmSource = gameObject.AddComponent<AudioSource>();
         }
 
+        //効果音用
         if (sfxSource == null)
         {
             sfxSource = gameObject.AddComponent<AudioSource>();
@@ -92,6 +93,7 @@ public class AudioManager : MonoBehaviour
         return bgmSource != null && bgmSource.isPlaying && bgmSource.clip == feverBgmClip;
     }
 
+    //BGM切替
     public void PlayFeverBgm()
     {
         if (bgmSource == null || feverBgmClip == null) return;
@@ -101,6 +103,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
+    //BGM戻す
     public void RestoreBgm()
     {
         if (bgmSource == null || bgmClip == null) return;

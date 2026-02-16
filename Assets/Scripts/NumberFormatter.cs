@@ -2,11 +2,13 @@
 
 public static class NumberFormatter
 {
-    private static readonly string[] Units = new string[]
+    //日本語の数値単位
+    static readonly string[] Units = new string[]
     {
         "", "万", "億", "兆", "京", "垓", "秭", "穣", "溝", "澗", "正", "載", "極", "恒河沙", "阿僧祇", "那由他", "不可思議", "無量大数"
     };
 
+    //総所持金など
     public static string FormatFull(long value)
     {
         if (value < 0)
@@ -21,27 +23,13 @@ public static class NumberFormatter
 
         decimal v = value;
         int unitIndex = 0;
-
         while (v >= 10_000m && unitIndex < Units.Length - 1)
         {
             v /= 10_000m;
             unitIndex++;
         }
 
-        string fmt;
-        if (v >= 100m)
-        {
-            fmt = "0";
-        }
-        else if (v >= 10m)
-        {
-            fmt = "0.#";
-        }
-        else
-        {
-            fmt = "0.##";
-        }
-
+        string fmt = v >= 100m ? "0" : (v >= 10m ? "0.#" : "0.##");
         return v.ToString(fmt) + Units[unitIndex] + "円";
     }
 
@@ -52,7 +40,6 @@ public static class NumberFormatter
             return "-" + FormatLimited(-value, maxChars);
         }
 
-        // Under 10,000: keep 円 and avoid commas to fit 5 chars (e.g. 1000円)
         if (value < 10_000)
         {
             return value.ToString() + "円";
@@ -64,21 +51,18 @@ public static class NumberFormatter
             return s;
         }
 
-        // Try a shorter format by trimming decimals
         string compact = FormatFullRounded(value, 0);
         if (compact.Length <= maxChars)
         {
             return compact;
         }
 
-        // Fallback: remove currency suffix if still too long
         string noYen = compact.EndsWith("円") ? compact.Substring(0, compact.Length - 1) : compact;
         if (noYen.Length <= maxChars)
         {
             return noYen;
         }
 
-        // Last resort: hard trim
         return noYen.Substring(0, Math.Min(maxChars, noYen.Length));
     }
 
@@ -96,7 +80,6 @@ public static class NumberFormatter
 
         decimal v = value;
         int unitIndex = 0;
-
         while (v >= 10_000m && unitIndex < Units.Length - 1)
         {
             v /= 10_000m;

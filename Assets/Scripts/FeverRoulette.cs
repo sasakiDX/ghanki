@@ -22,12 +22,12 @@ public class FeverRoulette : MonoBehaviour
     public float feverMultiplier = 2f;
     public float blinkInterval = 0.15f;
     [Range(0.01f, 1f)]
-    public float feverChance = 0.02f; // 1/50
-    public float feverCooldownSeconds = 300f; // 5 minutes
+    public float feverChance = 0.02f; //1/50
+    public float feverCooldownSeconds = 300f; //5minutes
 
-    private bool isSpinning;
-    private bool isFever;
-    private float nextFeverAllowedTime;
+    bool isSpinning;
+    bool isFever;
+    float nextFeverAllowedTime;
 
     void Start()
     {
@@ -60,7 +60,7 @@ public class FeverRoulette : MonoBehaviour
         int lastDigitFinal = DecideLastDigit(baseDigit);
         int[] digits = new int[4] { minDigit, minDigit, minDigit, minDigit };
 
-        // Roll first three digits one by one
+        //先頭3桁を確定
         for (int i = 0; i < 3; i++)
         {
             float elapsed = 0f;
@@ -75,7 +75,7 @@ public class FeverRoulette : MonoBehaviour
             UpdateText(digits);
         }
 
-        // Roll last digit slowly and stop
+        //最後の1桁
         float slowElapsed = 0f;
         while (slowElapsed < lastDigitSpinDuration)
         {
@@ -91,7 +91,7 @@ public class FeverRoulette : MonoBehaviour
         digits[3] = lastDigitFinal;
         UpdateText(digits);
 
-        // Ensure UI text is updated before judging
+        //表示確定後判定
         yield return null;
 
         bool win = IsAllDigitsMatch(digits) && IsDisplayedAllMatch();
@@ -105,13 +105,13 @@ public class FeverRoulette : MonoBehaviour
 
     int DecideLastDigit(int baseDigit)
     {
-        // Cooldown: force miss
+        //クールダウン中は必ず外す
         if (Time.time < nextFeverAllowedTime)
         {
             return PickDifferentDigit(baseDigit);
         }
 
-        // 1/50 chance to match; otherwise pick a different digit
+        //1/50で当たり
         if (Random.value < feverChance)
         {
             return baseDigit;

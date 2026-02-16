@@ -7,26 +7,26 @@ public class MoneySystem : MonoBehaviour
     public static MoneySystem Instance;
 
     [Header("UI")]
-    public TMP_Text moneyText;  // MoneyText をアサインする
+    public TMP_Text moneyText;
 
     [Header("Money Data")]
-    public long money = 0;     // 所持金
-    public long sales = 0;     // 売上（UIに表示しない）
+    public long money = 0;
+    public long sales = 0;
 
     [Header("Fever")]
     public float moneyMultiplier = 1f;
 
-    private void Awake()
+    void Awake()
     {
         Instance = this;
     }
 
-    private void Start()
+    void Start()
     {
         UpdateMoneyText();
     }
 
-    // 所持金を増やす
+    //所持金を増やす
     public void AddMoney(long amount)
     {
         long add = (long)Math.Floor(amount * moneyMultiplier);
@@ -38,7 +38,7 @@ public class MoneySystem : MonoBehaviour
         }
     }
 
-    // 所持金を減らす
+    //所持金を減らす
     public bool SpendMoney(long amount)
     {
         if (money < amount) return false;
@@ -58,9 +58,9 @@ public class MoneySystem : MonoBehaviour
         moneyMultiplier = Mathf.Max(0f, multiplier);
     }
 
-    // UIを更新（ここでリンクする）
     public void UpdateMoneyText()
     {
+        if (moneyText == null) return;
         moneyText.text = NumberFormatter.FormatFull(money);
     }
 }
